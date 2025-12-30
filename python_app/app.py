@@ -108,7 +108,16 @@ def add_numbers():
 
 
 # ================= CREATE DB =================
+# ================= CREATE DB (RENDER FIX) =================
+with app.app_context():
+    db.create_all()
+
+    # create default user if not exists
+    if not User.query.filter_by(username="admin").first():
+        admin = User(username="admin", password="1234")
+        db.session.add(admin)
+        db.session.commit()
+
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
+   
     app.run(debug=True)
