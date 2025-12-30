@@ -119,6 +119,3 @@ def initialize_db():
 initialize_db()
 
 
-if __name__ == "__main__":
-   
-    app.run(debug=True)
