@@ -107,14 +107,17 @@ def add_numbers():
     })
 
 
-# ================= CREATE DB =================
-@app.before_first_request
 def initialize_db():
-    db.create_all()
-    if not User.query.filter_by(username="admin").first():
-        admin = User(username="admin", password="1234")
-        db.session.add(admin)
-        db.session.commit()
+    with app.app_context():
+        db.create_all()
+        if not User.query.filter_by(username="admin").first():
+            admin = User(username="admin", password="1234")
+            db.session.add(admin)
+            db.session.commit()
+
+# Call it manually when app starts
+initialize_db()
+
 
 if __name__ == "__main__":
    
